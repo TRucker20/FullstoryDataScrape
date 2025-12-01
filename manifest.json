@@ -1,0 +1,26 @@
+{
+    "manifest_version": 3,
+    "name": "FullStory Funnel Scraper",
+    "version": "1.0",
+    "description": "Scrapes data from a list of FullStory funnel IDs by navigating through them.",
+    "permissions": [
+      "tabs",
+      "downloads"
+    ],
+    "host_permissions": [
+      "https://*.fullstory.com/*"
+    ],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "action": {
+      "default_title": "Start FullStory Scrape",
+      "default_popup": "popup.html"
+    },
+    "content_scripts": [
+    {
+      "matches": ["https://*.fullstory.com/*"],
+      "js": ["content.js"]
+    }
+  ]
+  }
