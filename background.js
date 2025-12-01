@@ -248,6 +248,7 @@ function downloadCSV(csvString, filename) {
       sendResponse({ status: "Scraping started." });
       const baseURL = `https://app.fullstory.com/ui/${request.org_id}/funnels/details/`
       scrapeAllFunnels(request.org_id,request.funnel_names,request.funnel_ids,request.value);
+      sendResponse({status: "Scraping Complete."});
       return true; // Keep the message channel open for async response
     }
   });
