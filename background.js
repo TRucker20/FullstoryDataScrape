@@ -128,7 +128,7 @@ function downloadCSV(csvString, filename) {
         if (funneldata.length > 0) {
           const csvContent = convertArrayToCSV(funneldata);
           // const organization = '12ZXGN';
-          const funnelIdRow = `\nOrg_${org_id},Funnel_${ids[i]},Date_Range${dateRanges[0]}_${dateRanges[1]}\n`;
+          const funnelIdRow = `\nOrg_${org_id},Date_Range(${ids[i]}_${dateRanges},Date_Range${dateRanges[0]}_${dateRanges[1]}\n`;
           finalcsv += funnelIdRow;
           const funnelNameRow = `${funnel_names[i]},----,----\n`;
           finalcsv += funnelNameRow;
@@ -136,7 +136,7 @@ function downloadCSV(csvString, filename) {
           
           
           
-          console.log(`🎉 CSV Download initiated for Funnel ID: ${ids[i]}`);
+          // console.log(`🎉 CSV Download initiated for Funnel ID: ${ids[i]}`);
         } else {
             console.warn(`No valid user data was extracted for Funnel ID: ${ids[i]}. CSV download skipped.`);
         }
