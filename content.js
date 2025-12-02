@@ -5,7 +5,7 @@ const TABLE_SELECTOR = 'table[data-testid="table"]';
 const EXPAND_BUTTON_SELECTOR = '[data-testid="funnel-summary-expand"]'; 
 // Selector for all individual step breakdown containers (boxes)
 const STEP_BOX_SELECTOR = '[data-testid^="step-"]';
-
+const SUMMARY_CHART = '[data-component="SummaryChart"]';
 // --- HELPER FUNCTIONS ---
 
 /**
@@ -109,7 +109,7 @@ function waitForDataReady(selector, timeout = 15000) {
         const startTime = Date.now();
 
         const check = () => {
-            const elements = document.querySelectorAll(STEP_BOX_SELECTOR); // Targeting the boxes
+            const elements = document.querySelectorAll(selector); // Targeting the boxes
             // Check if we found step boxes AND if the first box contains the table selector
             if (elements.length > 0 && elements[0].querySelector(TABLE_SELECTOR)) {
                 return resolve(elements); // Resolve with the list of box elements
@@ -450,10 +450,28 @@ async function scrapeTableData(funnelId) {
   const allTablesData = []; 
   
   try {
+    const summarychart = await waitForDataReady(SUMMARY_CHART);
+
     // 1. WAIT FOR AND FIND ALL STEP BOXES (post-click)
     // The result is now the list of DIVs (the box elements).
-    const stepBoxes = await waitForDataReady(STEP_BOX_SELECTOR); 
-    
+    summarychart.forEach((box, index) => {
+      const tableData = [];
+      const table = box.querySelector(TABLE_SELECTOR); // Find the table inside this specific box
+
+      const headers = Array.from(table.querySelectorAll('thead th')).map(h => h.innerText.trim());
+      tableData.push([headers.slice(0)]); 
+
+      table.querySelectorAll('tr').forEach(row => {
+        const rowData = Array.from(row.querySelectorAll('td')).map(cell => cell.innerText.trim());
+        if(rowData.length != 0){
+            tableData.push(rowData);
+        }
+        
+      });
+
+      allTablesData.push(tableData);
+    });
+    const stepBoxes = await waitForDataReady(STEP_BOX_SELECTOR);
     // 2. ITERATE THROUGH ALL FOUND BOXES and scrape the table inside
     stepBoxes.forEach((box, index) => {
       const tableData = [];

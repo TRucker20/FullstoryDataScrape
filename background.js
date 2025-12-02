@@ -128,7 +128,7 @@ function downloadCSV(csvString, filename) {
         if (funneldata.length > 0) {
           const csvContent = convertArrayToCSV(funneldata);
           // const organization = '12ZXGN';
-          const funnelIdRow = `\nOrg_${org_id},Date_Range(${ids[i]}_${dateRanges},Date_Range${dateRanges[0]}_${dateRanges[1]}\n`;
+          const funnelIdRow = `\nOrg_${org_id},Date_Range(${dateRanges[0]}_${dateRanges[1]}),Date_Range(${dateRanges[2]}_${dateRanges[3]})\n`;
           finalcsv += funnelIdRow;
           const funnelNameRow = `${funnel_names[i]},----,----\n`;
           finalcsv += funnelNameRow;
