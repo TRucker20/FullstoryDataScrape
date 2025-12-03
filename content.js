@@ -344,7 +344,7 @@ async function clickPrimaryRangeButton(dateRanges) {
                     
                     // Execute necessary final steps
                     await setTargetDateRanges(dateRanges);
-                    await delay(1000)
+                    await delay(5000);
                     const funnelId = getFunnelIdFromUrl();
                     
                     // 2. AWAIT the scrape and RESOLVE the outer Promise
